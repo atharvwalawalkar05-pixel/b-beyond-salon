@@ -6,6 +6,12 @@
 <title>B Beyond Hair & Beauty Saloon – Kudal, Sindhudurg</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<!-- EmailJS SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <style>
 
 /* ════════════════════════════════════════
@@ -540,6 +546,72 @@ footer { background: var(--dark); padding: 3.5rem 6vw 2rem; }
   .gallery-item { height: 120px; }
 }
 
+/* ════════════════════════════════════════
+   REVIEW SUBMISSION FORM
+════════════════════════════════════════ */
+#leave-review { background: var(--dark); }
+#leave-review .section-title { color: var(--cream); }
+
+.review-form-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; margin-top: 3.5rem; align-items: start; }
+
+.review-form-box { background: var(--brown); padding: 2.5rem; }
+
+/* Star Rating Input */
+.star-rating-input { display: flex; flex-direction: row-reverse; justify-content: flex-end; gap: 0.3rem; margin-bottom: 0.5rem; }
+.star-rating-input input { display: none; }
+.star-rating-input label { font-size: 2rem; color: var(--sand); cursor: pointer; transition: color 0.15s; }
+.star-rating-input label:hover,
+.star-rating-input label:hover ~ label,
+.star-rating-input input:checked ~ label { color: var(--orange); }
+
+.review-question { font-size: 0.68rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--orange); margin-bottom: 0.5rem; margin-top: 1.2rem; }
+.review-form-box input,
+.review-form-box textarea,
+.review-form-box select {
+  width: 100%; padding: 0.85rem 1rem;
+  background: var(--dark); border: 1px solid var(--divider);
+  color: var(--cream); font-family: var(--sans); font-size: 0.88rem;
+  font-weight: 300; outline: none; transition: border-color 0.2s;
+  appearance: none;
+}
+.review-form-box input:focus,
+.review-form-box textarea:focus,
+.review-form-box select:focus { border-color: var(--orange); }
+.review-form-box textarea { resize: vertical; min-height: 80px; }
+.review-form-box input::placeholder,
+.review-form-box textarea::placeholder { color: var(--sand); opacity: 0.4; }
+
+.review-submit { width: 100%; padding: 1rem; background: var(--orange); color: var(--cream); border: none; font-family: var(--sans); font-size: 0.76rem; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; cursor: pointer; transition: all 0.25s; margin-top: 1.2rem; }
+.review-submit:hover { background: #d44d1f; transform: translateY(-2px); }
+.review-submit:disabled { background: var(--sand); cursor: not-allowed; transform: none; }
+
+/* Live Reviews from Firebase */
+.live-reviews-title { font-family: var(--serif); font-size: 1.5rem; font-weight: 300; color: var(--cream); margin-bottom: 1.5rem; }
+.live-reviews-title em { color: var(--orange); font-style: italic; }
+.live-review-list { display: flex; flex-direction: column; gap: 1.2rem; max-height: 480px; overflow-y: auto; padding-right: 0.5rem; }
+.live-review-list::-webkit-scrollbar { width: 3px; }
+.live-review-list::-webkit-scrollbar-track { background: var(--brown); }
+.live-review-list::-webkit-scrollbar-thumb { background: var(--orange); }
+.live-review-item { background: var(--brown); padding: 1.5rem; border-left: 3px solid var(--orange); }
+.live-review-stars { color: var(--orange); font-size: 0.85rem; margin-bottom: 0.5rem; }
+.live-review-text { font-family: var(--serif); font-size: 0.95rem; font-style: italic; color: var(--cream); line-height: 1.65; margin-bottom: 0.8rem; }
+.live-review-meta { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.3rem; }
+.live-review-name { font-size: 0.78rem; font-weight: 500; color: var(--cream); }
+.live-review-date { font-size: 0.7rem; font-weight: 300; color: var(--sand); }
+.live-review-badge { font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--orange); background: rgba(235,94,40,0.1); border: 1px solid rgba(235,94,40,0.25); padding: 0.2rem 0.5rem; }
+.review-empty { text-align: center; padding: 2rem; color: var(--sand); font-family: var(--serif); font-style: italic; }
+
+/* Success toast */
+.toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--brown); border-left: 3px solid var(--orange); color: var(--cream); padding: 1rem 2rem; font-size: 0.85rem; font-weight: 400; z-index: 9999; transition: transform 0.4s ease; white-space: nowrap; }
+.toast.show { transform: translateX(-50%) translateY(0); }
+
+@media (max-width: 768px) {
+  .review-form-wrap { grid-template-columns: 1fr; gap: 2.5rem; }
+}
+@media (max-width: 480px) {
+  .review-form-box { padding: 1.8rem 1.4rem; }
+  .star-rating-input label { font-size: 1.7rem; }
+}
 </style>
 </head>
 <body>
@@ -560,10 +632,14 @@ footer { background: var(--dark); padding: 3.5rem 6vw 2rem; }
 <div class="login-modal" id="login-modal">
   <div class="login-box">
     <h3>Admin <em style="color:var(--orange)">Login</em></h3>
-    <p>Enter password to access the admin panel</p>
-    <input type="password" id="admin-password" placeholder="Enter password" />
-    <p class="login-error" id="login-error">❌ Wrong password. Try again.</p>
-    <button onclick="checkPassword()">Login →</button>
+    <p>Sign in with your admin email and password</p>
+    <input type="email" id="admin-email" placeholder="Enter admin email" />
+    <input type="password" id="admin-password" placeholder="Enter password" style="margin-top:0.8rem;" />
+    <p class="login-error" id="login-error">❌ Wrong email or password. Try again.</p>
+    <button onclick="adminLogin()" id="login-btn">Login →</button>
+    <p style="font-size:0.72rem;color:var(--sand);margin-top:1rem;text-align:center;">
+      🔒 Secured with Firebase Authentication
+    </p>
   </div>
 </div>
 
@@ -573,7 +649,7 @@ footer { background: var(--dark); padding: 3.5rem 6vw 2rem; }
     <h2>Admin <em>Panel</em></h2>
     <div style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap;">
       <button class="admin-clear-btn" onclick="clearBookings()">Clear All</button>
-      <button class="admin-close" onclick="closeAdmin()">✕ Close</button>
+      <button class="admin-close" onclick="adminLogout()">🚪 Logout</button>
     </div>
   </div>
   <div class="admin-stats">
@@ -781,6 +857,58 @@ footer { background: var(--dark); padding: 3.5rem 6vw 2rem; }
   </div>
 </section>
 
+<!-- ═══ LEAVE A REVIEW ═══ -->
+<section id="leave-review">
+  <div class="fade-up" style="text-align:center;max-width:500px;margin:0 auto 0.5rem;">
+    <div class="section-label" style="justify-content:center;">Share Your Experience</div>
+    <h2 class="section-title">Leave a <em>Review</em></h2>
+  </div>
+  <div class="review-form-wrap fade-up">
+    <!-- FORM -->
+    <div class="review-form-box">
+      <p class="review-question">Your Name *</p>
+      <input type="text" id="r-name" placeholder="Enter your name" />
+
+      <p class="review-question">How Was Your Overall Experience? *</p>
+      <div class="star-rating-input">
+        <input type="radio" id="star5" name="rating" value="5"/><label for="star5">★</label>
+        <input type="radio" id="star4" name="rating" value="4"/><label for="star4">★</label>
+        <input type="radio" id="star3" name="rating" value="3"/><label for="star3">★</label>
+        <input type="radio" id="star2" name="rating" value="2"/><label for="star2">★</label>
+        <input type="radio" id="star1" name="rating" value="1"/><label for="star1">★</label>
+      </div>
+
+      <p class="review-question">What Was the Best Part of the Salon? *</p>
+      <select id="r-best">
+        <option value="">-- Select best part --</option>
+        <option>Staff behaviour &amp; friendliness</option>
+        <option>Cleanliness &amp; hygiene</option>
+        <option>Quality of hair service</option>
+        <option>Beauty treatments</option>
+        <option>Relaxing atmosphere</option>
+        <option>Value for money</option>
+        <option>Everything was perfect!</option>
+      </select>
+
+      <p class="review-question">How Did You Like Our Service? *</p>
+      <textarea id="r-review" placeholder="Tell others about your experience at B Beyond Salon..."></textarea>
+
+      <button class="review-submit" id="review-submit-btn" onclick="submitReview()">⭐ Submit Review</button>
+    </div>
+
+    <!-- LIVE REVIEWS FROM FIREBASE -->
+    <div>
+      <h3 class="live-reviews-title">Recent <em>Reviews</em></h3>
+      <div class="live-review-list" id="live-review-list">
+        <div class="review-empty">Loading reviews...</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
 <!-- ═══ CTA BAND ═══ -->
 <section id="cta-band">
   <h2>Ready to Experience<br>Professional Beauty Care?</h2>
@@ -824,7 +952,33 @@ footer { background: var(--dark); padding: 3.5rem 6vw 2rem; }
 </footer>
 
 <script>
-/* ── HAMBURGER → MOBILE DRAWER ── */
+/* ════════════════════════════════════════
+   FIREBASE INIT
+════════════════════════════════════════ */
+const firebaseConfig = {
+  apiKey: "AIzaSyDNJeBTdMFXqR8KYJqL9z0J7uSAnrB8uVg",
+  authDomain: "b-beyond-salon.firebaseapp.com",
+  projectId: "b-beyond-salon",
+  storageBucket: "b-beyond-salon.firebasestorage.app",
+  messagingSenderId: "592128739896",
+  appId: "1:592128739896:web:f8b68bbb6444b3934174cd",
+  measurementId: "G-CCS71DXQRX"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+/* ════════════════════════════════════════
+   EMAILJS INIT
+   NOTE: Replace YOUR_PUBLIC_KEY, YOUR_SERVICE_ID, YOUR_TEMPLATE_ID
+   after setting up EmailJS at emailjs.com
+════════════════════════════════════════ */
+emailjs.init("QahuE0ycftrmfWAk1");
+const EMAILJS_SERVICE  = "service_wm1yuhz";
+const EMAILJS_TEMPLATE = "template_4iywb0k";
+
+/* ════════════════════════════════════════
+   NAV & MENU
+════════════════════════════════════════ */
 const ham = document.getElementById('hamburger');
 const mobileMenu = document.getElementById('mobile-menu');
 ham.addEventListener('click', () => {
@@ -837,25 +991,25 @@ function closeMenu() {
   mobileMenu.classList.remove('open');
   document.body.style.overflow = '';
 }
-
-/* ── NAV SCROLL SHADOW ── */
 window.addEventListener('scroll', () => {
   document.getElementById('main-nav').style.boxShadow = window.scrollY > 30 ? '0 4px 28px rgba(0,0,0,0.5)' : 'none';
 });
 
 /* ── ACTIVE MOBILE BOTTOM NAV ── */
 const sections = document.querySelectorAll('section[id]');
-const navLinks = document.querySelectorAll('.mobile-bottom-nav a');
+const mobileNavLinks = document.querySelectorAll('.mobile-bottom-nav a');
 window.addEventListener('scroll', () => {
   let current = '';
   sections.forEach(s => { if (window.scrollY >= s.offsetTop - 200) current = s.id; });
-  navLinks.forEach(a => {
+  mobileNavLinks.forEach(a => {
     a.classList.remove('active');
     if (a.getAttribute('href') === '#' + current) a.classList.add('active');
   });
 });
 
-/* ── SCROLL ANIMATIONS ── */
+/* ════════════════════════════════════════
+   SCROLL ANIMATIONS
+════════════════════════════════════════ */
 const fadeEls = document.querySelectorAll('.fade-up');
 const obs = new IntersectionObserver((entries) => {
   entries.forEach((e, i) => {
@@ -864,64 +1018,307 @@ const obs = new IntersectionObserver((entries) => {
 }, { threshold: 0.08 });
 fadeEls.forEach(el => obs.observe(el));
 
-/* ── BOOK SERVICE (pre-fill) ── */
+/* ════════════════════════════════════════
+   TOAST NOTIFICATION
+════════════════════════════════════════ */
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+/* ════════════════════════════════════════
+   BOOK SERVICE — PRE-FILL FORM
+════════════════════════════════════════ */
 function bookService(service) {
   document.getElementById('f-service').value = service;
   document.getElementById('booking').scrollIntoView({ behavior: 'smooth' });
 }
 
-/* ── BOOKING → WHATSAPP ── */
-function submitBooking() {
+/* ════════════════════════════════════════
+   BOOKING → FIREBASE + WHATSAPP + EMAIL
+════════════════════════════════════════ */
+async function submitBooking() {
   const name    = document.getElementById('f-name').value.trim();
   const phone   = document.getElementById('f-phone').value.trim();
   const service = document.getElementById('f-service').value;
   const date    = document.getElementById('f-date').value;
   const time    = document.getElementById('f-time').value;
   const note    = document.getElementById('f-note').value.trim();
-  if (!name || !phone || !service || !date || !time) { alert('Please fill all required fields.'); return; }
-  const bookings = JSON.parse(localStorage.getItem('bbeyond_bookings') || '[]');
-  bookings.push({ name, phone, service, date, time, note, bookedAt: new Date().toLocaleString('en-IN') });
-  localStorage.setItem('bbeyond_bookings', JSON.stringify(bookings));
-  const msg = `🌟 *New Appointment Request*\n\n👤 *Name:* ${name}\n📞 *Phone:* ${phone}\n💇 *Service:* ${service}\n📅 *Date:* ${date}\n🕐 *Time:* ${time}\n📝 *Note:* ${note || 'None'}\n\n_Sent via B Beyond Salon Website_`;
-  window.open(`https://wa.me/919404274246?text=${encodeURIComponent(msg)}`, '_blank');
-  ['f-name','f-phone','f-note'].forEach(id => document.getElementById(id).value = '');
-  ['f-service','f-time'].forEach(id => document.getElementById(id).value = '');
-  document.getElementById('f-date').value = '';
+
+  if (!name || !phone || !service || !date || !time) {
+    alert('Please fill all required fields (Name, Phone, Service, Date, Time).');
+    return;
+  }
+
+  const booking = {
+    name, phone, service, date, time,
+    note: note || 'None',
+    bookedAt: new Date().toLocaleString('en-IN'),
+    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+  };
+
+  try {
+    /* 1. Save to Firebase */
+    await db.collection('bookings').add(booking);
+
+    /* 2. Send Email via EmailJS */
+    if (EMAILJS_SERVICE !== 'YOUR_SERVICE_ID') {
+      emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE, {
+        to_email:   'docsend06@gmail.com',
+        from_name:  name,
+        phone:      phone,
+        service:    service,
+        date:       date,
+        time:       time,
+        note:       note || 'None',
+        reply_to:   'noreply@bbeyond.com'
+      });
+    }
+
+    /* 3. Send to WhatsApp */
+    const msg = `🌟 *New Appointment Request*\n\n` +
+      `👤 *Name:* ${name}\n📞 *Phone:* ${phone}\n💇 *Service:* ${service}\n` +
+      `📅 *Date:* ${date}\n🕐 *Time:* ${time}\n📝 *Note:* ${note || 'None'}\n\n` +
+      `_Sent via B Beyond Salon Website_`;
+    window.open(`https://wa.me/919404274246?text=${encodeURIComponent(msg)}`, '_blank');
+
+    /* 4. Reset form */
+    ['f-name','f-phone','f-note'].forEach(id => document.getElementById(id).value = '');
+    ['f-service','f-time'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('f-date').value = '';
+
+    showToast('✅ Booking sent! Check WhatsApp for confirmation.');
+
+  } catch(err) {
+    console.error(err);
+    alert('Something went wrong. Please try again or call us directly.');
+  }
 }
 
-/* ── LIGHTBOX ── */
-function openLightbox(src) { document.getElementById('lightbox-img').src = src; document.getElementById('lightbox').classList.add('active'); document.body.style.overflow = 'hidden'; }
-function closeLightbox() { document.getElementById('lightbox').classList.remove('active'); document.body.style.overflow = ''; }
-document.getElementById('lightbox').addEventListener('click', function(e) { if (e.target === this) closeLightbox(); });
+/* ════════════════════════════════════════
+   REVIEW SUBMISSION → FIREBASE
+════════════════════════════════════════ */
+async function submitReview() {
+  const name   = document.getElementById('r-name').value.trim();
+  const rating = document.querySelector('input[name="rating"]:checked');
+  const best   = document.getElementById('r-best').value;
+  const review = document.getElementById('r-review').value.trim();
 
-/* ── ADMIN ── */
-function openAdminLogin() { document.getElementById('login-modal').classList.add('active'); setTimeout(() => document.getElementById('admin-password').focus(), 100); }
-function checkPassword() {
-  if (document.getElementById('admin-password').value === '2005') {
+  if (!name || !rating || !best || !review) {
+    alert('Please fill all fields and select a star rating!');
+    return;
+  }
+
+  const btn = document.getElementById('review-submit-btn');
+  btn.disabled = true;
+  btn.textContent = 'Submitting...';
+
+  try {
+    await db.collection('reviews').add({
+      name,
+      rating: parseInt(rating.value),
+      best,
+      review,
+      date: new Date().toLocaleDateString('en-IN'),
+      timestamp: firebase.firestore.FieldValue.serverTimestamp()
+    });
+
+    /* Reset */
+    document.getElementById('r-name').value = '';
+    document.getElementById('r-best').value = '';
+    document.getElementById('r-review').value = '';
+    document.querySelectorAll('input[name="rating"]').forEach(r => r.checked = false);
+
+    showToast('🌟 Thank you for your review! It\'s now live.');
+    loadLiveReviews();
+
+  } catch(err) {
+    console.error(err);
+    alert('Could not submit review. Please try again.');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '⭐ Submit Review';
+  }
+}
+
+/* ════════════════════════════════════════
+   LOAD LIVE REVIEWS FROM FIREBASE
+════════════════════════════════════════ */
+function loadLiveReviews() {
+  const list = document.getElementById('live-review-list');
+  db.collection('reviews')
+    .orderBy('timestamp', 'desc')
+    .limit(10)
+    .onSnapshot(snapshot => {
+      if (snapshot.empty) {
+        list.innerHTML = '<div class="review-empty">No reviews yet. Be the first to review!</div>';
+        return;
+      }
+      list.innerHTML = snapshot.docs.map(doc => {
+        const r = doc.data();
+        const stars = '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
+        return `
+          <div class="live-review-item">
+            <div class="live-review-stars">${stars}</div>
+            <div class="live-review-text">"${r.review}"</div>
+            <div style="font-size:0.75rem;color:var(--orange);margin-bottom:0.5rem;">🏆 Best part: ${r.best}</div>
+            <div class="live-review-meta">
+              <span class="live-review-name">— ${r.name}</span>
+              <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span class="live-review-badge">Verified</span>
+                <span class="live-review-date">${r.date || ''}</span>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }, err => {
+      console.error(err);
+      list.innerHTML = '<div class="review-empty">Could not load reviews.</div>';
+    });
+}
+
+/* ════════════════════════════════════════
+   FIREBASE AUTH — ADMIN LOGIN
+════════════════════════════════════════ */
+const auth = firebase.auth();
+
+function openAdminLogin() {
+  document.getElementById('login-modal').classList.add('active');
+  setTimeout(() => document.getElementById('admin-email').focus(), 100);
+}
+
+async function adminLogin() {
+  const email    = document.getElementById('admin-email').value.trim();
+  const password = document.getElementById('admin-password').value;
+  const btn      = document.getElementById('login-btn');
+  const errEl    = document.getElementById('login-error');
+
+  if (!email || !password) {
+    errEl.textContent = '❌ Please enter email and password.';
+    errEl.style.display = 'block';
+    return;
+  }
+
+  btn.textContent = 'Logging in...';
+  btn.disabled = true;
+  errEl.style.display = 'none';
+
+  try {
+    await auth.signInWithEmailAndPassword(email, password);
     document.getElementById('login-modal').classList.remove('active');
+    document.getElementById('admin-email').value = '';
     document.getElementById('admin-password').value = '';
-    document.getElementById('login-error').style.display = 'none';
     openAdmin();
-  } else { document.getElementById('login-error').style.display = 'block'; }
+  } catch(err) {
+    errEl.textContent = '❌ Wrong email or password. Try again.';
+    errEl.style.display = 'block';
+  } finally {
+    btn.textContent = 'Login →';
+    btn.disabled = false;
+  }
 }
-function openAdmin() { document.getElementById('admin-panel').style.display = 'block'; document.body.style.overflow = 'hidden'; loadAdminData(); }
-function closeAdmin() { document.getElementById('admin-panel').style.display = 'none'; document.body.style.overflow = ''; }
-function loadAdminData() {
-  const bookings = JSON.parse(localStorage.getItem('bbeyond_bookings') || '[]');
-  document.getElementById('stat-total').textContent = bookings.length;
-  document.getElementById('stat-today').textContent = bookings.filter(b => b.date === new Date().toISOString().slice(0,10)).length;
-  const tbody = document.getElementById('admin-tbody');
-  if (!bookings.length) { tbody.innerHTML = '<tr><td colspan="8" class="admin-empty">No bookings yet.</td></tr>'; return; }
-  tbody.innerHTML = [...bookings].reverse().map((b, i) => `<tr><td>${bookings.length-i}</td><td style="color:var(--cream);font-weight:400;">${b.name}</td><td><a href="tel:${b.phone}" style="color:var(--orange);text-decoration:none;">${b.phone}</a></td><td><span class="admin-badge">${b.service}</span></td><td>${b.date}</td><td>${b.time}</td><td>${b.note||'—'}</td><td style="font-size:0.75rem;">${b.bookedAt}</td></tr>`).join('');
-}
-function clearBookings() { if (confirm('Clear ALL bookings?')) { localStorage.removeItem('bbeyond_bookings'); loadAdminData(); } }
 
-document.addEventListener('keydown', e => {
-  if (e.key === 'Enter' && document.getElementById('login-modal').classList.contains('active')) checkPassword();
-  if (e.key === 'Escape') { document.getElementById('login-modal').classList.remove('active'); closeLightbox(); closeMenu(); }
+async function adminLogout() {
+  await auth.signOut();
+  closeAdmin();
+  showToast('👋 Logged out successfully.');
+}
+
+function openAdmin() {
+  document.getElementById('admin-panel').style.display = 'block';
+  document.body.style.overflow = 'hidden';
+  loadAdminData();
+}
+
+function closeAdmin() {
+  document.getElementById('admin-panel').style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+async function loadAdminData() {
+  const tbody = document.getElementById('admin-tbody');
+  tbody.innerHTML = '<tr><td colspan="8" class="admin-empty">Loading bookings...</td></tr>';
+
+  try {
+    const snap = await db.collection('bookings').orderBy('timestamp','desc').get();
+    document.getElementById('stat-total').textContent = snap.size;
+
+    const todayCount = snap.docs.filter(d => d.data().date === new Date().toISOString().slice(0,10)).length;
+    document.getElementById('stat-today').textContent = todayCount;
+
+    if (snap.empty) {
+      tbody.innerHTML = '<tr><td colspan="8" class="admin-empty">No bookings yet.</td></tr>';
+      return;
+    }
+    tbody.innerHTML = snap.docs.map((doc, i) => {
+      const b = doc.data();
+      return `<tr>
+        <td>${snap.size - i}</td>
+        <td style="color:var(--cream);font-weight:400;">${b.name}</td>
+        <td><a href="tel:${b.phone}" style="color:var(--orange);text-decoration:none;">${b.phone}</a></td>
+        <td><span class="admin-badge">${b.service}</span></td>
+        <td>${b.date}</td>
+        <td>${b.time}</td>
+        <td>${b.note || '—'}</td>
+        <td style="font-size:0.75rem;">${b.bookedAt || '—'}</td>
+      </tr>`;
+    }).join('');
+  } catch(err) {
+    console.error(err);
+    tbody.innerHTML = '<tr><td colspan="8" class="admin-empty">⚠️ Permission denied. Please login again.</td></tr>';
+  }
+}
+
+async function clearBookings() {
+  if (!confirm('Clear ALL bookings from Firebase? This cannot be undone!')) return;
+  try {
+    const snap = await db.collection('bookings').get();
+    const batch = db.batch();
+    snap.forEach(doc => batch.delete(doc.ref));
+    await batch.commit();
+    loadAdminData();
+    showToast('🗑️ All bookings cleared.');
+  } catch(err) {
+    alert('Error clearing bookings. Make sure you are logged in.');
+  }
+}
+
+/* ════════════════════════════════════════
+   LIGHTBOX
+════════════════════════════════════════ */
+function openLightbox(src) {
+  document.getElementById('lightbox-img').src = src;
+  document.getElementById('lightbox').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('active');
+  document.body.style.overflow = '';
+}
+document.getElementById('lightbox').addEventListener('click', function(e) {
+  if (e.target === this) closeLightbox();
 });
 
+/* ════════════════════════════════════════
+   KEYBOARD SHORTCUTS
+════════════════════════════════════════ */
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && document.getElementById('login-modal').classList.contains('active')) adminLogin();
+  if (e.key === 'Escape') {
+    document.getElementById('login-modal').classList.remove('active');
+    closeLightbox();
+    closeMenu();
+  }
+});
+
+/* ════════════════════════════════════════
+   INIT ON PAGE LOAD
+════════════════════════════════════════ */
 document.getElementById('f-date').min = new Date().toISOString().slice(0,10);
+loadLiveReviews();
 </script>
 </body>
 </html>
