@@ -1,0 +1,19 @@
+
+/* ════════════════════════════════════════
+   PRICING SECTION
+   file: assets/css/sections/pricing.css
+════════════════════════════════════════ */
+#pricing { background: var(--dark); }
+#pricing .section-title { color: var(--cream); }
+.pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3.5rem; }
+.price-card { background: var(--brown); padding: 2.2rem 2rem; border-top: 3px solid transparent; transition: all 0.3s; }
+.price-card:hover { border-top-color: var(--orange); transform: translateY(-4px); }
+.price-card.featured { border-top-color: var(--orange); }
+.price-tag { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem; }
+.price-service-name { font-family: var(--serif); font-size: 1.3rem; font-weight: 400; color: var(--cream); }
+.price-icon { font-size: 1.5rem; }
+.price-amount { font-family: var(--serif); font-size: 2.2rem; font-weight: 300; color: var(--orange); margin-bottom: 0.3rem; }
+.price-amount span { font-size: 1rem; font-family: var(--sans); font-weight: 300; color: var(--sand); }
+.price-desc { font-size: 0.82rem; font-weight: 300; color: var(--sand); line-height: 1.65; margin-bottom: 1.5rem; }
+.price-book-btn { width: 100%; padding: 0.75rem; background: transparent; border: 1px solid rgba(235,94,40,0.4); color: var(--orange); font-family: var(--sans); font-size: 0.72rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; cursor: pointer; transition: all 0.25s; }
+.price-book-btn:hover, .price-card.featured .price-book-btn { background: var(--orange); color: var(--cream); }

@@ -1,0 +1,32 @@
+
+/* ════════════════════════════════════════
+   LOCATION SECTION
+   file: assets/css/sections/location.css
+════════════════════════════════════════ */
+#location { background: var(--brown); }
+#location .section-title { color: var(--cream); }
+.location-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 4rem; align-items: start; margin-top: 3.5rem; }
+.location-info { display: flex; flex-direction: column; gap: 2rem; }
+.info-label { font-size: 0.65rem; font-weight: 400; letter-spacing: 0.28em; text-transform: uppercase; color: var(--orange); margin-bottom: 0.5rem; }
+.info-value { font-family: var(--serif); font-size: 1.12rem; font-weight: 300; color: var(--cream); line-height: 1.6; }
+.info-value a { color: var(--orange); text-decoration: none; }
+.map-wrap { width: 100%; height: 370px; overflow: hidden; border: 1px solid var(--divider); }
+.map-wrap iframe { width: 100%; height: 100%; border: none; }
+
+/* WHY US SECTION */
+#why { background: var(--dark); }
+#why .section-title { color: var(--cream); }
+.features-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; margin-top: 4rem; background: var(--divider); }
+.feature-block { padding: 2.8rem 2rem; background: var(--dark); border-bottom: 3px solid transparent; transition: background 0.3s, border-color 0.3s; }
+.feature-block:hover { background: var(--brown); border-bottom-color: var(--orange); }
+.feature-num { font-family: var(--serif); font-size: 3.5rem; font-weight: 300; color: rgba(235,94,40,0.1); line-height: 1; margin-bottom: 1.2rem; }
+.feature-icon { font-size: 1.8rem; margin-bottom: 1rem; }
+.feature-title { font-family: var(--serif); font-size: 1.25rem; font-weight: 400; color: var(--cream); margin-bottom: 0.8rem; line-height: 1.3; }
+.feature-desc { font-size: 0.84rem; font-weight: 300; line-height: 1.68; color: var(--sand); }
+
+/* CTA BAND */
+#cta-band { background: var(--orange); padding: 6rem 6vw; text-align: center; position: relative; overflow: hidden; }
+#cta-band::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(45deg, rgba(37,36,34,0.05) 0px, rgba(37,36,34,0.05) 1px, transparent 1px, transparent 34px); }
+#cta-band h2 { font-family: var(--serif); font-size: clamp(2rem, 4vw, 3rem); font-weight: 300; color: var(--cream); margin-bottom: 1rem; position: relative; }
+#cta-band p { font-size: 1rem; font-weight: 300; color: rgba(255,252,242,0.75); margin-bottom: 2.5rem; position: relative; }
+.cta-actions { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; position: relative; }
