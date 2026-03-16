@@ -1,0 +1,107 @@
+
+/* ════════════════════════════════════════
+   RESPONSIVE DESIGN (MEDIA QUERIES)
+   file: assets/css/layout/responsive.css
+════════════════════════════════════════ */
+
+/* TABLET (max 1024px) */
+@media (max-width: 1024px) {
+  .features-grid { grid-template-columns: repeat(2, 1fr); }
+  .pricing-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* TABLET PORTRAIT (max 768px) */
+@media (max-width: 768px) {
+  nav { padding: 1rem 5vw; }
+  .nav-links, .nav-cta { display: none; }
+  .hamburger { display: flex; }
+  section { padding: 4.5rem 5vw; }
+  #hero { padding: 0 5vw; align-items: flex-end; padding-bottom: 6rem; }
+  .hero-img::after { background: linear-gradient(to top, rgba(37,36,34,0.97) 0%, rgba(37,36,34,0.7) 50%, rgba(37,36,34,0.3) 100%); }
+  .hero-content { max-width: 100%; }
+  .hero-headline { font-size: clamp(2.6rem, 8vw, 3.5rem); }
+  .hero-sub { max-width: 100%; }
+  .hero-actions { flex-direction: column; gap: 0.75rem; }
+  .hero-actions .btn-primary, .hero-actions .btn-outline { width: 100%; text-align: center; }
+  .hero-trust { gap: 1rem; }
+  .scroll-line { display: none; }
+  .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .about-visual { height: 280px; }
+  .about-pillars { grid-template-columns: 1fr 1fr; }
+  .services-header { flex-direction: column; align-items: flex-start; }
+  .services-grid { grid-template-columns: repeat(2, 1fr); }
+  .pricing-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+  .booking-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .form-row { grid-template-columns: 1fr; }
+  .gallery-grid { grid-template-columns: repeat(3, 1fr); gap: 4px; }
+  .gallery-item:nth-child(1) { grid-column: span 3; height: 240px; aspect-ratio: auto; }
+  .gallery-item { aspect-ratio: 1; }
+  .features-grid { grid-template-columns: repeat(2, 1fr); }
+  .reviews-grid { grid-template-columns: 1fr; }
+  .location-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .map-wrap { height: 300px; }
+  .footer-top { grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .cta-actions { flex-direction: column; align-items: center; }
+  .cta-actions a { width: 100%; max-width: 320px; text-align: center; }
+  .admin-stats { grid-template-columns: repeat(2, 1fr); }
+  .review-form-wrap { grid-template-columns: 1fr; gap: 2.5rem; }
+}
+
+/* MOBILE (max 480px) */
+@media (max-width: 480px) {
+  .mobile-bottom-nav { display: grid; }
+  .whatsapp-float { bottom: 5.5rem; right: 1rem; width: 48px; height: 48px; font-size: 1.3rem; }
+  nav { padding: 0.9rem 4vw; }
+  .nav-logo { font-size: 1.25rem; }
+  #hero { padding: 0 4vw; padding-bottom: 7rem; min-height: 100svh; }
+  .hero-eyebrow { font-size: 0.6rem; margin-bottom: 1rem; }
+  .hero-headline { font-size: clamp(2.2rem, 9vw, 2.8rem); margin-bottom: 1rem; }
+  .hero-sub { font-size: 0.88rem; margin-bottom: 1.8rem; }
+  .hero-actions { gap: 0.65rem; margin-bottom: 2rem; }
+  .hero-actions .btn-primary, .hero-actions .btn-outline { padding: 0.85rem 1.5rem; font-size: 0.72rem; }
+  .trust-item span { font-size: 0.7rem; }
+  section { padding: 4rem 4vw; }
+  .section-title { font-size: clamp(1.8rem, 7vw, 2.4rem); }
+  .about-visual { height: 220px; }
+  .about-img-main { width: 75%; height: 80%; }
+  .about-stat-box { width: 52%; height: 42%; }
+  .about-stat-box .stat { font-size: 2rem; }
+  .about-pillars { grid-template-columns: 1fr; gap: 0.6rem; }
+  .services-grid { grid-template-columns: 1fr; gap: 1px; }
+  .service-card { padding: 1.8rem 1.5rem; }
+  .service-num { font-size: 2rem; }
+  .pricing-grid { grid-template-columns: 1fr; gap: 1rem; }
+  .price-card { padding: 1.8rem 1.5rem; }
+  .price-amount { font-size: 1.8rem; }
+  .booking-form { padding: 1.8rem 1.4rem; }
+  .booking-steps { gap: 1rem; }
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 4px; }
+  .gallery-item:nth-child(1) { grid-column: span 2; height: 200px; }
+  .gallery-item { height: 140px; }
+  .gallery-overlay span { opacity: 0; }
+  .features-grid { grid-template-columns: 1fr; gap: 1px; }
+  .feature-block { padding: 1.8rem 1.5rem; }
+  .review-card { padding: 1.8rem 1.5rem; }
+  #cta-band { padding: 4rem 4vw; }
+  #cta-band h2 { font-size: clamp(1.7rem, 7vw, 2.2rem); }
+  .location-info { gap: 1.5rem; }
+  .map-wrap { height: 260px; }
+  .footer-top { grid-template-columns: 1fr; gap: 2rem; }
+  footer { padding: 3rem 4vw 6rem; }
+  .footer-bottom { flex-direction: column; align-items: flex-start; gap: 0.4rem; }
+  .admin-stats { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+  #admin-panel { padding: 1.5rem 4vw 6rem; }
+  .admin-stat { padding: 1rem; }
+  .admin-stat-num { font-size: 1.8rem; }
+  .review-form-box { padding: 1.8rem 1.4rem; }
+  .star-rating-input label { font-size: 1.7rem; }
+}
+
+/* EXTRA SMALL (max 360px) */
+@media (max-width: 360px) {
+  .hero-headline { font-size: 2rem; }
+  .section-title { font-size: 1.7rem; }
+  .about-pillars { grid-template-columns: 1fr; }
+  .gallery-item:nth-child(1) { height: 170px; }
+  .gallery-item { height: 120px; }
+}

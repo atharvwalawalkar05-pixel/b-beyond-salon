@@ -1,0 +1,34 @@
+
+/* ════════════════════════════════════════
+   ADMIN & LOGIN STYLES
+   file: assets/css/sections/admin.css
+════════════════════════════════════════ */
+#admin-panel { display: none; position: fixed; inset: 0; background: var(--dark); z-index: 2000; overflow-y: auto; padding: 3rem 6vw; }
+.admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--divider); flex-wrap: wrap; gap: 1rem; }
+.admin-header h2 { font-family: var(--serif); font-size: 2rem; font-weight: 300; color: var(--cream); }
+.admin-header h2 em { font-style: italic; color: var(--orange); }
+.admin-close { background: var(--brown); color: var(--cream); border: none; padding: 0.6rem 1.2rem; cursor: pointer; font-family: var(--sans); font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; transition: background 0.2s; }
+.admin-close:hover { background: var(--orange); }
+.admin-stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 1rem; margin-bottom: 2.5rem; }
+.admin-stat { background: var(--brown); padding: 1.5rem; border-left: 3px solid var(--orange); }
+.admin-stat-num { font-family: var(--serif); font-size: 2.5rem; font-weight: 300; color: var(--orange); }
+.admin-stat-label { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--sand); margin-top: 0.3rem; }
+.admin-table-wrap { overflow-x: auto; }
+.admin-table { width: 100%; border-collapse: collapse; min-width: 700px; }
+.admin-table th { background: var(--brown); color: var(--orange); font-size: 0.68rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; padding: 1rem; text-align: left; border-bottom: 1px solid var(--divider); }
+.admin-table td { padding: 1rem; font-size: 0.85rem; font-weight: 300; color: var(--sand); border-bottom: 1px solid var(--divider); vertical-align: middle; }
+.admin-table tr:hover td { background: rgba(64,61,57,0.3); color: var(--cream); }
+.admin-badge { display: inline-block; padding: 0.25rem 0.75rem; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; background: rgba(235,94,40,0.15); color: var(--orange); border: 1px solid rgba(235,94,40,0.3); }
+.admin-empty { text-align: center; padding: 4rem; color: var(--sand); font-family: var(--serif); font-size: 1.2rem; font-style: italic; }
+.admin-clear-btn { background: rgba(235,94,40,0.15); color: var(--orange); border: 1px solid rgba(235,94,40,0.3); padding: 0.6rem 1.2rem; font-family: var(--sans); font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; transition: all 0.2s; }
+.admin-clear-btn:hover { background: var(--orange); color: var(--cream); }
+.login-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 1999; align-items: center; justify-content: center; padding: 1rem; }
+.login-modal.active { display: flex; }
+.login-box { background: var(--dark); border: 1px solid var(--divider); border-top: 3px solid var(--orange); padding: 3rem; width: 100%; max-width: 380px; }
+.login-box h3 { font-family: var(--serif); font-size: 1.8rem; font-weight: 300; color: var(--cream); margin-bottom: 0.5rem; }
+.login-box p { font-size: 0.82rem; font-weight: 300; color: var(--sand); margin-bottom: 2rem; }
+.login-box input { width: 100%; padding: 0.85rem 1rem; background: var(--brown); border: 1px solid var(--divider); color: var(--cream); font-family: var(--sans); font-size: 0.88rem; outline: none; margin-bottom: 1rem; transition: border-color 0.1s; }
+.login-box input:focus { border-color: var(--orange); }
+.login-box button { width: 100%; padding: 0.9rem; background: var(--orange); color: var(--cream); border: none; font-family: var(--sans); font-size: 0.76rem; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; cursor: pointer; transition: background 0.25s; }
+.login-box button:hover { background: #d44d1f; }
+.login-error { color: #ff6b6b; font-size: 0.8rem; margin-top: -0.5rem; margin-bottom: 0.8rem; display: none; }

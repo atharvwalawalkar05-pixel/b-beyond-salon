@@ -1,0 +1,19 @@
+
+/* ════════════════════════════════════════
+   ROOT VARIABLES
+   file: assets/css/base/variables.css
+════════════════════════════════════════ */
+:root {
+  --cream:   #fffcf2;
+  --sand:    #ccc5b9;
+  --brown:   #403d39;
+  --dark:    #252422;
+  --orange:  #eb5e28;
+  --divider: rgba(204,197,185,0.14);
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans:  'Jost', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--sans); background: var(--dark); color: var(--cream); overflow-x: hidden; }

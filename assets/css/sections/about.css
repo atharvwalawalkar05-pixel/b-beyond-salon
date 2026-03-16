@@ -1,0 +1,19 @@
+
+/* ════════════════════════════════════════
+   ABOUT SECTION
+   file: assets/css/sections/about.css
+════════════════════════════════════════ */
+#about { background: var(--brown); }
+#about .section-title { color: var(--cream); }
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; margin-top: 4rem; }
+.about-visual { position: relative; height: 460px; }
+.about-img-main { position: absolute; width: 70%; height: 85%; top: 0; right: 0; object-fit: cover; }
+.about-stat-box { position: absolute; width: 50%; height: 45%; bottom: 0; left: 0; background: var(--dark); border: 1px solid var(--divider); border-left: 3px solid var(--orange); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.3rem; padding: 1.5rem; }
+.about-stat-box .stat { font-family: var(--serif); font-size: 2.8rem; font-weight: 300; color: var(--orange); line-height: 1; }
+.about-stat-box .stat-label { font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--sand); }
+.about-text p { font-size: 0.93rem; font-weight: 300; line-height: 1.82; color: var(--sand); margin-bottom: 1.2rem; }
+.about-pillars { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-top: 1.8rem; }
+.pillar { display: flex; align-items: flex-start; gap: 0.7rem; padding: 1rem 1.1rem; background: rgba(37,36,34,0.55); border-left: 2px solid var(--orange); transition: background 0.2s; }
+.pillar:hover { background: rgba(37,36,34,0.85); }
+.pillar-icon { font-size: 1rem; margin-top: 2px; }
+.pillar-text { font-size: 0.82rem; font-weight: 400; color: var(--cream); line-height: 1.4; }

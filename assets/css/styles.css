@@ -1,0 +1,26 @@
+/* ════════════════════════════════════════
+   MAIN ENTRY POINT
+   All modular styles are imported here.
+════════════════════════════════════════ */
+
+/* Base Styles */
+@import url('base/variables.css');
+@import url('base/animations.css');
+
+/* Layout & Global */
+@import url('layout/layout.css');
+@import url('layout/responsive.css');
+
+/* Components */
+@import url('components/components.css');
+
+/* Sections */
+@import url('sections/hero.css');
+@import url('sections/about.css');
+@import url('sections/services.css');
+@import url('sections/pricing.css');
+@import url('sections/booking.css');
+@import url('sections/gallery.css');
+@import url('sections/reviews.css');
+@import url('sections/location.css');
+@import url('sections/admin.css');
