@@ -89,7 +89,7 @@ cd b-beyond-saloon
 
 ## 👨‍💻 Author
 
-Developed by **Only3_group**  
+Developed by **Shreyas Sarmalkar**  
 BSc Computer Science Student
 
 ---
